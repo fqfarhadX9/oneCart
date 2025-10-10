@@ -4,3 +4,5 @@ const asyncHandler = (requestHandler) => {
         catch((error) => next(error));
     }
 }
+
+module.exports = asyncHandler
