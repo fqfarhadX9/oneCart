@@ -104,8 +104,43 @@ const logOutUser = asyncHandler(async (req, res) => {
     )
 })
 
+const googleLogin = asyncHandler( async(req, res) => {
+    const {name, email} = req.body
+
+    if(!email || !name) {
+        throw new ApiError(400, "Please provide all the fields")
+    }
+
+    let user = await User.findOne({email})
+
+    if(!user) {
+        user = await User.create({
+            name,
+            email
+        })
+    }
+
+    const token = generateAccessToken({id: user._id.toString()})
+
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000 
+    })
+
+    user.password = undefined
+
+    return res.status(200).json(
+        new ApiResponse(200, user, "User logged in successfully")
+    )
+
+})
+
+
 module.exports = {
     registerUser,
     logInUser,
-    logOutUser
+    logOutUser,
+    googleLogin
 }
