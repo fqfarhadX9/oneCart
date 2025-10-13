@@ -4,7 +4,7 @@ const ApiError = require("../utils/apiError.js")
 
 const verifyJwt = asyncHandler((req, res, next) => {
     try {
-        const token = req.cookies.accessToken
+        const token = req.cookies.token
         if(!token) {
             throw new ApiError(401, "Unauthorized request")
         }
