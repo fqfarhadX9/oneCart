@@ -4,7 +4,7 @@ const User = require("../models/user.js")
 const ApiResponse = require("../utils/ApiResponse.js")
 const bcrypt = require("bcrypt")
 const validator = require("validator")
-const generateAccessToken = require("../config/token.js")
+const {generateAccessToken, generateAdminAccessToken} = require("../config/token.js")
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -45,7 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: false,
-        sameSite: "Strict",
+        sameSite: "Lax",
         maxAge: 7 * 24 * 60 * 60 * 1000 
     })
 
@@ -80,7 +80,7 @@ const logInUser = asyncHandler(async (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: false,
-        sameSite: "Strict",
+        sameSite: "Lax",
         maxAge: 7 * 24 * 60 * 60 * 1000 
     })
 
@@ -96,7 +96,7 @@ const logOutUser = asyncHandler(async (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: false,
-        sameSite: "Strict",
+        sameSite: "Lax",
     })
 
     return res.status(200).json(
@@ -118,7 +118,7 @@ const googleLogin = asyncHandler(async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
-            sameSite: "Strict",
+            sameSite: "Lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
@@ -133,11 +133,38 @@ const googleLogin = asyncHandler(async (req, res) => {
     }
 });
 
+const adminLogin = asyncHandler(async(req, res) => {
+    try {
+       const {email, password} = req.body;
+       if (!email || !password) 
+        throw new ApiError(400, "Missing email or password")
+       
+        if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD) {
+            const token = generateAdminAccessToken(email)
 
+            res.cookie("token", token, {
+               httpOnly: true,
+               secure: false,
+               sameSite: "Lax",
+               maxAge: 7 * 24 * 60 * 60 * 1000 
+            })
+
+            return res.status(201).json(
+              new ApiResponse(201, token, "Admin logged in successfully")
+            )
+        } else {
+        throw new ApiError(401, "Invalid email or password");
+    }
+    } catch (error) {
+        console.log("Admin logged in Error", error)
+        throw new ApiError(500, error.message || "Internal server error")
+    }
+})
 
 module.exports = {
     registerUser,
     logInUser,
     logOutUser,
-    googleLogin
+    googleLogin,
+    adminLogin
 }
