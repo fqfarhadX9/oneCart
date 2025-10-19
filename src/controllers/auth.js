@@ -134,31 +134,34 @@ const googleLogin = asyncHandler(async (req, res) => {
 });
 
 const adminLogin = asyncHandler(async(req, res) => {
-    try {
-       const {email, password} = req.body;
-       if (!email || !password) 
-        throw new ApiError(400, "Missing email or password")
-       
-        if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD) {
-            const token = generateAdminAccessToken(email)
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      throw new ApiError(400, "Missing email or password");
 
-            res.cookie("token", token, {
-               httpOnly: true,
-               secure: false,
-               sameSite: "Lax",
-               maxAge: 7 * 24 * 60 * 60 * 1000 
-            })
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+      const token = generateAdminAccessToken(email);
 
-            return res.status(201).json(
-              new ApiResponse(201, token, "Admin logged in successfully")
-            )
-        } else {
-        throw new ApiError(401, "Invalid email or password");
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "Lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      return res
+        .status(201)
+        .json(new ApiResponse(201, token, "Admin logged in successfully"));
+    } else {
+      throw new ApiError(401, "Invalid email or password");
     }
-    } catch (error) {
-        console.log("Admin logged in Error", error)
-        throw new ApiError(500, error.message || "Internal server error")
-    }
+  } catch (error) {
+    console.log("Admin logged in Error", error);
+
+    if (error instanceof ApiError) throw error;
+
+    throw new ApiError(500, error.message || "Internal server error");
+  }
 })
 
 module.exports = {
