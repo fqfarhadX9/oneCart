@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const connectDB = require('./db/index.js')
 const authRoute = require('./routes/auth.js')
 const userRoutes = require('./routes/user.js')
+const productRoutes = require('./routes/product.js')
 dotenv.config()
 
 const app = express()
@@ -23,6 +24,7 @@ app.use(cookieParser())
 
 app.use("/api/auth", authRoute)
 app.use("/api/user", userRoutes)
+app.use("/api/product", productRoutes)
 
 app.get("/", (req, res) => {
   res.send("Server is running...")
