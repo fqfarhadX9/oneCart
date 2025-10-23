@@ -55,6 +55,42 @@ const addProduct = asyncHandler(async (req, res) => {
     }
 })
 
+const listProduct = asyncHandler(async (req, res) => {
+  const products = await Product.find({});
+
+  if (products.length === 0) {
+    throw new ApiError(404, "No products found")
+  }
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      products,
+      "Products fetched successfully"
+    )
+  )
+})
+
+const removeProduct = asyncHandler(async (req, res) => {
+  const {id} = req.params
+  const product = await Product.findByIdAndDelete(id)
+
+  if (!product) {
+    throw new ApiError(404, "No product found");
+  }
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      product,
+      "Product deleted successfully"
+    )
+  )
+})
+
+
 module.exports = {
     addProduct,
+    listProduct,
+    removeProduct
 }
