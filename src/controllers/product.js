@@ -11,10 +11,11 @@ const addProduct = asyncHandler(async (req, res) => {
             throw new ApiError(400, "all fields are required")
         }
 
-        const image1LocalPath = req.files?.image1[0]?.path
-        const image2LocalPath = req.files?.image2[0]?.path
-        const image3LocalPath = req.files?.image3[0]?.path
-        const image4LocalPath = req.files?.image4[0]?.path
+        const image1LocalPath = req.files?.image1?.[0]?.path;
+        const image2LocalPath = req.files?.image2?.[0]?.path;
+        const image3LocalPath = req.files?.image3?.[0]?.path;
+        const image4LocalPath = req.files?.image4?.[0]?.path;
+
 
         const image1 = image1LocalPath ? await uploadOnCloudinary(image1LocalPath) : null
         const image2 = image2LocalPath ? await uploadOnCloudinary(image2LocalPath) : null
