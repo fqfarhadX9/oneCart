@@ -7,6 +7,7 @@ const authRoute = require('./routes/auth.js')
 const userRoutes = require('./routes/user.js')
 const productRoutes = require('./routes/product.js')
 const cartRotes = require('./routes/cart.js')
+const orderRotes = require('./routes/order.js')
 dotenv.config()
 
 const app = express()
@@ -27,6 +28,7 @@ app.use("/api/auth", authRoute)
 app.use("/api/user", userRoutes)
 app.use("/api/product", productRoutes)
 app.use("/api/cart", cartRotes)
+app.use("/api/order", orderRotes)
 
 app.get("/", (req, res) => {
   res.send("Server is running...")

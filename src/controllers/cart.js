@@ -33,15 +33,15 @@ const addtoCart = asyncHandler(async(req, res) => {
         .json(new ApiResponse(201, cartData, "added to cart"))
    } catch (error) {
     console.log(error)
-    if (error instanceof ApiError) throw error;
+    if (error instanceof ApiError) throw error
     
-    throw new ApiError(500, error.message || "Internal server error");
+    throw new ApiError(500, error.message || "Internal server error")
    }
 })
 
 const updateCart = asyncHandler(async (req, res) => {
   try {
-    const { itemId, size, quantity } = req.body;
+    const { itemId, size, quantity } = req.body
 
     if (!itemId || !size) {
       throw new ApiError(400, "Item ID and size are required");
