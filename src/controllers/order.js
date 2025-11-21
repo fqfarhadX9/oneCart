@@ -55,9 +55,53 @@ const userOrder = asyncHandler(async (req, res) => {
     }
 });
 
+// for admin
+
+const allOrders = asyncHandler(async(req, res) => {
+    try {
+        const orders = await Order.find()
+        if (orders.length === 0) {
+           throw new apiError(404, "No orders found")
+        }
+    
+    
+        return res
+            .status(200)
+            .json(new ApiResponse(200, orders, "All orders fetched successfully"))
+    } catch (error) {
+        console.log(error)
+
+        if (error instanceof ApiError) throw error
+        throw new ApiError(500, error.message || "Internal server error")
+    }
+})
+
+const updateStatus = asyncHandler(async (req, res) => {
+    const { orderId, status } = req.body
+
+    if (!orderId || !status) {
+        throw new ApiError(400, "All fields are required")
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+        orderId,
+        { status },
+        { new: true } 
+    )
+
+    if (!updatedOrder) {
+        throw new ApiError(404, "Order not found")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, updatedOrder, "Status updated successfully"))
+});
 
 
 module.exports = {
     placeOrder,
-    userOrder
+    userOrder,
+    allOrders,
+    updateStatus
 }
