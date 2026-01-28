@@ -89,9 +89,38 @@ const removeProduct = asyncHandler(async (req, res) => {
   )
 })
 
+const addReview = asyncHandler(async (req, res) => {
+    const { id } = req.params; // product id
+    const { comment, rating } = req.body;
+
+    if (!comment) {
+        throw new ApiError(400, "Comment is required");
+    }
+
+    const product = await Product.findById(id);
+    if (!product) {
+        throw new ApiError(404, "Product not found");
+    }
+
+    const review = {
+        user: req.user?._id || null,       
+        name: req.user?.name || "Guest",
+        comment,
+        rating: rating || 0
+    };
+
+    product.reviews.push(review);
+    await product.save();
+
+    return res.status(201).json(
+        new ApiResponse(201, review, "Review added successfully")
+    );
+});
+
 
 module.exports = {
     addProduct,
     listProduct,
-    removeProduct
+    removeProduct,
+    addReview
 }

@@ -1,7 +1,8 @@
 const express = require('express')
-const { addProduct, listProduct, removeProduct } = require('../controllers/product.js')
+const { addProduct, listProduct, removeProduct, addReview } = require('../controllers/product.js')
 const upload = require('../middlewares/multer')
 const adminAuth = require('../middlewares/adminAuth.js')
+const verifyJwt = require('../middlewares/authorization.js')
 
 const productRoutes = express.Router()
 productRoutes.post("/addProduct", upload.fields([
@@ -11,5 +12,6 @@ productRoutes.post("/addProduct", upload.fields([
     {name: "image4", maxCount: 1}]) ,addProduct)
 productRoutes.get("/list", listProduct)
 productRoutes.post("/remove/:id", adminAuth, removeProduct)
+productRoutes.post("/review/:id", verifyJwt, addReview)
 
 module.exports = productRoutes
