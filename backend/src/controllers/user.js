@@ -4,11 +4,11 @@ const ApiResponse = require("../utils/ApiResponse.js")
 const asyncHandler = require("../utils/asyncHandler.js")
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-    if (!req.user_id) {
+    if (!req.user._id) {
         throw new ApiError(401, "Unauthorized: No user ID provided")
     }
 
-    const user = await User.findById(req.user_id).select("-password -refreshToken")
+    const user = await User.findById(req.user._id).select("-password -refreshToken")
     
     if (!user) {
         throw new ApiError(404, "User not found")

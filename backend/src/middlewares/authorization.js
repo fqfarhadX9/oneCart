@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken")
 const asyncHandler = require("../utils/asyncHandler.js")
 const ApiError = require("../utils/apiError.js")
+const User = require("../models/user.js")
 
-const verifyJwt = asyncHandler((req, res, next) => {
+const verifyJwt = asyncHandler(async(req, res, next) => {
     try {
         const token = req.cookies.token
         if(!token) {
@@ -10,11 +11,12 @@ const verifyJwt = asyncHandler((req, res, next) => {
         }
     
         const verifyToken = jwt.verify(token, process.env.JWT_SECRET)
-        if(!verifyToken) {
-            throw new ApiError(401, "Invalid Access Token")
+        const user = await User.findById(verifyToken.id).select("-password")
+        if (!user) {
+            throw new ApiError(401, "Unauthorized request")
         }
     
-        req.user_id = verifyToken.id
+        req.user = user
         next()
     } catch (error) {
         console.log("authorization error")
