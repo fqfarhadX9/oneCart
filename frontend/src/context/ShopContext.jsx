@@ -57,6 +57,7 @@ function ShopContext({ children }) {
         try {
             const result = await axios.get(serverUrl + "/api/cart/getcart", {withCredentials: true})
             setCartItem(result.data.data)
+            console.log("User cart data:", result.data.data);
         } catch (error) {
             console.log("Error while get user cart:", error.result?.data || error.message);
         }
@@ -109,6 +110,37 @@ function ShopContext({ children }) {
         return totalCount;
     }
 
+const addReview = async (productId, reviewData) => {
+    if (!userData) {
+        console.log("Login required to add review");
+    }
+    try {
+        const response = await axios.post(
+            `${serverUrl}/api/product/review/${productId}`,
+            reviewData,
+            { withCredentials: true }
+        );
+
+        // Update local productData if it exists in products
+        setProducts(prevProducts =>
+            prevProducts.map(product =>
+                product._id === productId
+                    ? {
+                          ...product,
+                          reviews: [...(product.reviews || []), response.data.data]
+                      }
+                    : product
+            )
+        );
+
+        return response.data.data;
+    } catch (error) {
+        console.log("Error adding review:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
+
     useEffect(() => {
         getAllProducts()
     }, [serverUrl])
@@ -132,7 +164,8 @@ function ShopContext({ children }) {
         setCartItem,
         getCartCount,
         updateQuantity,
-        getCartAmount
+        getCartAmount,
+        addReview
     };
 
     return (
