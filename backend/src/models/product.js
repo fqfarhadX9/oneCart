@@ -56,6 +56,12 @@ const productSchema = new mongoose.Schema({
         comment: { 
             type: String, 
         },
+        rating: {
+            type: Number,
+            required: true,
+            min: 1,
+            max: 5
+        },
         date: { 
             type: Date, 
             default: Date.now 

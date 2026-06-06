@@ -91,10 +91,10 @@ const removeProduct = asyncHandler(async (req, res) => {
 
 const addReview = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { comment } = req.body;
+    const { comment, rating } = req.body;
 
-    if (!comment) {
-        throw new ApiError(400, "Comment is required");
+    if (!comment || !rating) {
+        throw new ApiError(400, "Comment and rating are required");
     }
 
     const product = await Product.findById(id);
@@ -107,9 +107,10 @@ const addReview = asyncHandler(async (req, res) => {
         userId: req.user._id,
         userName: req.user.name,
         comment,
+        rating: Number(rating),
         date: new Date(),
     };
-
+    console.log("Adding review:", review);
     product.reviews.push(review);
     await product.save();
 
