@@ -10,7 +10,7 @@ const placeOrder = asyncHandler(async(req, res) => {
         if (!address || !items || !amount) {
           throw new ApiError(400, "Missing required fields")
         }
-        const userId = req.user_id
+        const userId = req.user._id
         const orderData = {
             items,
             amount, 
@@ -37,7 +37,7 @@ const placeOrder = asyncHandler(async(req, res) => {
 
 const userOrder = asyncHandler(async (req, res) => {
     try {
-        const userId = req.user_id;
+        const userId = req.user._id;
 
         const orders = await Order.find({ userId })
         if (!orders || orders.length === 0) {
@@ -61,7 +61,7 @@ const allOrders = asyncHandler(async(req, res) => {
     try {
         const orders = await Order.find()
         if (orders.length === 0) {
-           throw new apiError(404, "No orders found")
+           throw new ApiError(404, "No orders found")
         }
     
     
