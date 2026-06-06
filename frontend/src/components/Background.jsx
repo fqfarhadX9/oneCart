@@ -1,8 +1,8 @@
 import React from 'react'
 import back4 from '../assets/back4.jpg.png'
-import back1 from '../assets/watch3.jpg'
-import back2 from '../assets/about_img.png'
-import back3 from '../assets/back3.jpg.jpg'
+import back1 from '../assets/about_img.png'
+import back2 from '../assets/watch3.jpg'
+import back3 from '../assets/slider2 img.jpg'
 
 function Background({heroCount}) {
   if(heroCount===0) {

@@ -18,8 +18,8 @@ function RelatedProducts({category, subCategory, currentProductId}) {
     }, [products, category, subCategory, currentProductId])
   return (
     <div className='my-[130px] md:my-[40px] md:px-[60px]'>
-        <div className='ml-[20px] lg:ml-[80px]'>
-            <Title text1={"RELATED"} text2={"ITEMS"}/>
+        <div className='ml-[20px] lg:ml-[80px] '>
+            <div className='flex justify-center'><Title text1={"RELATED"} text2={"ITEMS"}/></div>
             <div className='w-[100%] mt-[30px] flex items-center justify-center
             flex-wrap gap-[50px]'>
                 {
