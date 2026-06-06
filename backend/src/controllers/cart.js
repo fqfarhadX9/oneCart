@@ -10,7 +10,7 @@ const addtoCart = asyncHandler(async(req, res) => {
       throw new ApiError(400, "Item ID and size are required");
       }
 
-     const user = await User.findById(req.user_id)
+     const user = await User.findById(req.user._id)
      if(!user) {
          throw new ApiError(400, "User not found")
      }
@@ -26,7 +26,7 @@ const addtoCart = asyncHandler(async(req, res) => {
          cartData[itemId] = {}
          cartData[itemId][size] = 1;
      }
-     await User.findByIdAndUpdate(req.user_id, {cartData})
+     await User.findByIdAndUpdate(req.user._id, {cartData})
  
      return res
         .status(201)
@@ -51,7 +51,7 @@ const updateCart = asyncHandler(async (req, res) => {
       throw new ApiError(400, "Quantity must be a number");
     }
 
-    const userData = await User.findById(req.user_id);
+    const userData = await User.findById(req.user._id);
     if (!userData) {
       throw new ApiError(404, "User not found");
     }
@@ -72,7 +72,7 @@ const updateCart = asyncHandler(async (req, res) => {
       cartData[itemId][size] = quantity;
     }
 
-    await User.findByIdAndUpdate(req.user_id, { cartData });
+    await User.findByIdAndUpdate(req.user._id, { cartData });
 
     return res
       .status(200)
@@ -86,7 +86,7 @@ const updateCart = asyncHandler(async (req, res) => {
 
 const getUserCart = asyncHandler(async (req, res) => {
   try {
-    const userData = await User.findById(req.user_id);
+    const userData = await User.findById(req.user._id);
 
     if (!userData) {
       throw new ApiError(404, "User not found");
