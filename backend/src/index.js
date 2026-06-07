@@ -14,23 +14,28 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 // ===== CORS =====
-const allowedOrigins = [
-  "https://one-cart-eight.vercel.app", 
-  "https://one-cart-git-main-farhads-projects-4e86e286.vercel.app",
-  "https://one-cart-a59e8elfj-farhads-projects-4e86e286.vercel.app", 
-  "http://localhost:5173",
-  "http://localhost:5174"];
+// const allowedOrigins = [
+//   "https://one-cart-eight.vercel.app", 
+//   "https://one-cart-git-main-farhads-projects-4e86e286.vercel.app",
+//   "https://one-cart-a59e8elfj-farhads-projects-4e86e286.vercel.app", 
+//   "http://localhost:5173",
+//   "http://localhost:5174"];
+// app.use(cors({
+//   origin: function(origin, callback){
+//     if(!origin) return callback(null, true); 
+//     if(allowedOrigins.indexOf(origin) === -1){
+//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: true
+// }))
+
 app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null, true); 
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin: true,
   credentials: true
-}))
+}));
 
 // ===== MIDDLEWARES =====
 app.use(express.json({ limit: "16kb" }))
