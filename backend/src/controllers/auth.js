@@ -1,7 +1,7 @@
 const ApiError = require("../utils/apiError.js")
 const asyncHandler = require("../utils/asyncHandler.js")
 const User = require("../models/user.js")
-const ApiResponse = require("../utils/ApiResponse.js")
+const ApiResponse = require("../utils/apiResponse.js")
 const bcrypt = require("bcrypt")
 const validator = require("validator")
 const {generateAccessToken, generateAdminAccessToken} = require("../config/token.js")
