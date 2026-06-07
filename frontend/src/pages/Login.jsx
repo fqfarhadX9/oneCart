@@ -13,7 +13,7 @@ import { UserDataContext } from '../context/UserDataContext'
 function Login() {
     const [show, setShow] = useState(false)
     
-    const {serverUrl} = useContext(AuthDataContext)
+    const {apiUrl} = useContext(AuthDataContext)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const {getCurrentUser} = useContext(UserDataContext)
@@ -22,7 +22,7 @@ function Login() {
     const handleSignin = async (e) => {
       e.preventDefault()
       try {
-        const result = await axios.post(serverUrl + '/api/auth/login', {
+        const result = await axios.post(apiUrl + '/api/auth/login', {
         email, password
       },{withCredentials: true})
         console.log(result.data)
@@ -45,7 +45,7 @@ function Login() {
           return;
         }
   
-        const result = await axios.post(serverUrl + '/api/auth/google-login', {
+        const result = await axios.post(apiUrl + '/api/auth/google-login', {
           name, email
         }, {withCredentials: true})
         console.log(result.data)

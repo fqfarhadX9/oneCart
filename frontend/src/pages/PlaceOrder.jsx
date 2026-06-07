@@ -12,7 +12,7 @@ function PlaceOrder() {
   const [method, setMethod] = useState('cod')
   const [loading, setLoading] = useState(false)
   const {cartItem, setCartItem, getCartAmount, delivery_fee, products} = useContext(ShopDataContext)
-  const {serverUrl} = useContext(AuthDataContext)
+  const {apiUrl} = useContext(AuthDataContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstName:'',
@@ -54,7 +54,7 @@ function PlaceOrder() {
       }
       switch (method) {
         case 'cod': {
-          const result = await axios.post(serverUrl + "/api/order/placeorder", 
+          const result = await axios.post(apiUrl + "/api/order/placeorder", 
           orderData, {withCredentials: true})
           console.log(result.data)
           toast.success("Order Placed Successfully")

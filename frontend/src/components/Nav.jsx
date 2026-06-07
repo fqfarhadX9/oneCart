@@ -20,11 +20,11 @@ function Nav() {
     const [showProfile, setShowProfile] = useState(false)
 
     const navigate = useNavigate()
-    const {serverUrl} = useContext(AuthDataContext)
+    const {apiUrl} = useContext(AuthDataContext)
 
     const handleLogOut = async () => {
       try {
-       const result = await axios.get(serverUrl + '/api/auth/logout', { withCredentials: true })
+       const result = await axios.get(apiUrl + '/api/auth/logout', { withCredentials: true })
        console.log(result.data);
        await getCurrentUser()
       } catch (err) {

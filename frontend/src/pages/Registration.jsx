@@ -13,7 +13,7 @@ import { UserDataContext } from '../context/UserDataContext'
 function Registration() {
   const [show, setShow] = useState(false)
 
-  const {serverUrl} = useContext(AuthDataContext)
+  const {apiUrl} = useContext(AuthDataContext)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -23,7 +23,7 @@ function Registration() {
   const handleSignup = async (e) => {
     e.preventDefault()
     try {
-      const result = await axios.post(serverUrl + '/api/auth/register', {
+      const result = await axios.post(apiUrl + '/api/auth/register', {
         name, email, password
       },{withCredentials: true})
       console.log(result.data)
@@ -44,7 +44,7 @@ function Registration() {
           console.error("No email returned from Google");
           return;
       }
-      const result = await axios.post(serverUrl + '/api/auth/google-login', {
+      const result = await axios.post(apiUrl + '/api/auth/google-login', {
         name, email
       }, {withCredentials: true})
       console.log(result.data)

@@ -5,13 +5,13 @@ import axios from 'axios'
 import Title from '../components/Title'
 
 function Order() {
-  const {serverUrl} = useContext(AuthDataContext)
+  const {apiUrl} = useContext(AuthDataContext)
   const {currency} = useContext(ShopDataContext)
   const [orderData, setOrderData] = useState([])
 
   const fetchOrder = async () => {
     try {
-      const result = await axios.get(serverUrl + "/api/order/userorder", {withCredentials: true})
+      const result = await axios.get(apiUrl + "/api/order/userorder", {withCredentials: true})
       if(result.data && result.data.data) {
         let allOrderItems = []
         result.data.data.map((order) => {
