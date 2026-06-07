@@ -5,6 +5,7 @@ import Card from './Card'
 
 function BestSeller() {
     const {products} = useContext(ShopDataContext)
+    console.log("bestseller products:" , products);
     const [bestSeller, setBestSeller] = useState([])
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function BestSeller() {
         <div className='w-[100%] h-[50%] mt-[30px] flex items-center justify-center 
     flex-wrap gap-[50px]'>
         {bestSeller?.map((item, index) => (
-            <Card key={index} image={item.image1} name={item.name} price={item.price}/>
+            <Card key={index} image={item.image1} name={item.name} price={item.price} id={item._id}/>
         ))}
     </div>
     </div>
