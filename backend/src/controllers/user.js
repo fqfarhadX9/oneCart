@@ -1,6 +1,6 @@
 const User = require("../models/user.js")
 const ApiError = require("../utils/apiError.js")
-const ApiResponse = require("../utils/ApiResponse.js")
+const ApiResponse = require("../utils/apiResponse.js")
 const asyncHandler = require("../utils/asyncHandler.js")
 
 const getCurrentUser = asyncHandler(async (req, res) => {
