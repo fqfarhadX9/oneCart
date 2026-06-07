@@ -5,11 +5,11 @@ import { UserDataContext } from './UserDataContext.js';
 
 function UserContext({ children }) {
     const [userData, setUserData] = useState("");
-    const { serverUrl } = useContext(AuthDataContext);
+    const { apiUrl } = useContext(AuthDataContext);
 
     const getCurrentUser = async () => {
         try {
-            const result = await axios.get(serverUrl + '/api/user/getCurrentUser', { withCredentials: true })
+            const result = await axios.get(apiUrl + '/api/user/getCurrentUser', { withCredentials: true })
 
             console.log(result.data);
             setUserData(result.data);
@@ -21,7 +21,7 @@ function UserContext({ children }) {
 
     useEffect(() => {
         getCurrentUser();
-    }, []);
+    }, [apiUrl]);
 
     const value = {
         userData,

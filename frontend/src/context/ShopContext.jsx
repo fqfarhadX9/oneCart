@@ -7,7 +7,7 @@ import { UserDataContext } from './UserDataContext.js';
 
 function ShopContext({ children }) {
     const [products, setProducts] = useState([])
-    const { serverUrl } = useContext(AuthDataContext)
+    const { apiUrl } = useContext(AuthDataContext)
     const {userData} = useContext(UserDataContext)
     const [search, setSearch] = useState('')
     const [showSearch, setShowSearch] = useState(false)
@@ -16,7 +16,7 @@ function ShopContext({ children }) {
     const delivery_fee = 40
     const getAllProducts = async () => {
         try {
-            const result = await axios.get(serverUrl + '/api/product/list', { withCredentials: true })
+            const result = await axios.get(apiUrl + '/api/product/list', { withCredentials: true })
 
             console.log(result.data);
             setProducts(result.data.data);
@@ -45,7 +45,7 @@ function ShopContext({ children }) {
 
         if(userData) {
             try {
-                const response = await axios.post(serverUrl + "/api/cart/addcart", 
+                const response = await axios.post(apiUrl + "/api/cart/addcart", 
                 {itemId, size}, {withCredentials: true})
                 console.log("Cart updated successfully:", response.data);
             } catch (error) {
@@ -55,7 +55,7 @@ function ShopContext({ children }) {
     }
     const getUserCart = async() => {
         try {
-            const result = await axios.get(serverUrl + "/api/cart/getcart", {withCredentials: true})
+            const result = await axios.get(apiUrl + "/api/cart/getcart", {withCredentials: true})
             setCartItem(result.data.data)
             console.log("User cart data:", result.data.data);
         } catch (error) {
@@ -69,7 +69,7 @@ function ShopContext({ children }) {
 
          if(userData) {
             try {
-            const result = await axios.post(serverUrl + "/api/cart/updatecart", 
+            const result = await axios.post(apiUrl + "/api/cart/updatecart", 
             {itemId, size, quantity}, {withCredentials: true})
             setCartItem(result.data)
          } catch (error) {
@@ -116,7 +116,7 @@ const addReview = async (productId, reviewData) => {
     }
     try {
         const response = await axios.post(
-            `${serverUrl}/api/product/review/${productId}`,
+            `${apiUrl}/api/product/review/${productId}`,
             reviewData,
             { withCredentials: true }
         );
@@ -143,7 +143,7 @@ const addReview = async (productId, reviewData) => {
 
     useEffect(() => {
         getAllProducts()
-    }, [serverUrl])
+    }, [apiUrl])
     useEffect(() => {
         if(userData) {
             getUserCart()

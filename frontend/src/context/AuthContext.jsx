@@ -3,9 +3,9 @@ import { AuthDataContext} from './AuthDataContext'
 
 // export const AuthDataContext = createContext()
 function AuthContext({children}) {
-    const serverUrl = "http://localhost:8000"
+    const apiUrl = import.meta.env.VITE_API_URL
     const value = {
-         serverUrl
+         apiUrl
     }
   return (
     <div>
