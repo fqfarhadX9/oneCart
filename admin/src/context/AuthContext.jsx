@@ -1,7 +1,7 @@
 import React from 'react'
 import { AuthDataContext } from './AuthDataContext'
 function AuthContext({children}) {
-    const serverUrl = "https://onecart-7q1f.onrender.com"
+    const serverUrl = import.meta.env.VITE_SERVER_URL
     const value = {
         serverUrl
     }
