@@ -11,11 +11,13 @@ function Home() {
 
   const fetchCount = async () => {
     try {
-      const products  =await axios.get(serverUrl, "/api/product/list", {withCredentials: true})
+      const products = await axios.get(`${serverUrl}/api/product/list`, {withCredentials: true})
       setTotalProducts(products.data.data.length)
+      // console.log("total products:", products);
 
-      const orders  =await axios.get(serverUrl, "/api/order/list", {withCredentials: true})
+      const orders = await axios.get(`${serverUrl}/api/order/list`, {withCredentials: true})
       setTotalOrders(orders.data.data.length)
+      // console.log("total orders:", orders);
     } catch (error) {
       console.log(error);
     }

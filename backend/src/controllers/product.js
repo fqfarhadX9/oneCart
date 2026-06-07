@@ -4,7 +4,7 @@ const ApiResponse = require("../utils/apiResponse.js")
 const uploadOnCloudinary = require("../config/cloudinary")
 const Product = require("../models/product.js")
 
-const addProduct = asyncHandler(async (req, res) => {
+const addProduct = asyncHandler(async (req, res) => {S
     try {
         const {name, description, price, category, subCategory, sizes, bestSeller} = req.body
         if(!name || !description || !price || !category || !subCategory || !sizes) {

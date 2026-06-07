@@ -15,7 +15,7 @@ function Order() {
     const fetchAllOrders = async() => {
         try {
             const response = await axios.get(serverUrl + "/api/order/list", {withCredentials:true})
-            console.log("orders data: ",response.data);
+            // console.log("orders data: ",response.data);
             setOrders(response.data.data.reverse())
         } catch (error) {
             console.log(error);

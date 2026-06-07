@@ -41,7 +41,7 @@ function Add() {
       formData.append("image2", image2)
       formData.append("image3", image3)
       formData.append("image4", image4)
-      const response = await axios.post(serverUrl + '/api/product/addProduct', 
+      const response = await axios.post(`${serverUrl}/api/product/addProduct`, 
       formData, {withCredentials: true})
       console.log(response.data)
       toast.success("Added Product Successfully")

@@ -5,14 +5,13 @@ import {AdminDataContext} from './AdminDataContext.js'
 function AdminContext({ children }) {
   const [adminData, setAdminData] = useState(null);
   const {serverUrl} = useContext(AuthDataContext);
-  console.log("server: ", serverUrl)
 
   const getCurrAdmin = async () => {
     try {
       const result = await axios.get(serverUrl + '/api/user/getCurrAdmin', {
         withCredentials: true,
       });
-      console.log("Admin data:", result.data);
+      // console.log("Admin data:", result.data);
       setAdminData(result.data);
     } catch (error) {
       console.error("Error fetching admin data:", error);
