@@ -14,7 +14,7 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 // ===== CORS =====
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = ["https://one-cart-eight.vercel.app/", "http://localhost:5174"];
 app.use(cors({
   origin: function(origin, callback){
     if(!origin) return callback(null, true); 
