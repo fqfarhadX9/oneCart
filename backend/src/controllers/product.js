@@ -57,7 +57,7 @@ const addProduct = asyncHandler(async (req, res) => {
 })
 
 const listProduct = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const products = await Product.find({}).sort({ _id: -1 });
 
   if (products.length === 0) {
     throw new ApiError(404, "No products found")
