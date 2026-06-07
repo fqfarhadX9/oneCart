@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Nav from '../components/Nav'
-import Background from '../components/background'
+import Background from '../components/Background'
 import Hero from '../components/Hero'
 import Product from './Product'
 import OurPolicy from '../components/OurPolicy'
